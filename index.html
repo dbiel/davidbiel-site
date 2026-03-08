@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>David Biel</title>
+  <meta name="description" content="David Biel — Business, Music, Adventure.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0c0f0a;
+      --surface: #141a12;
+      --surface-hover: #1b2218;
+      --border: #242e20;
+      --text: #dde0d5;
+      --text-muted: #7a8170;
+      --accent: #b5956a;
+      --accent-dim: rgba(181, 149, 106, 0.12);
+      --radius: 12px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── Noise texture overlay ─────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 256px;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── Layout ─────────────────────────────────────────────────── */
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Nav ────────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 16px 24px;
+      background: rgba(10, 10, 10, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── Hero ───────────────────────────────────────────────────── */
+    .hero {
+      padding: 160px 0 80px;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-label::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 7vw, 64px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 24px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 480px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .hero-line {
+      width: 48px;
+      height: 2px;
+      background: var(--accent);
+      margin-top: 40px;
+    }
+
+    /* ── Section ────────────────────────────────────────────────── */
+    section {
+      padding: 64px 0;
+    }
+
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Cards ──────────────────────────────────────────────────── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-bottom: 16px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .card:hover {
+      background: var(--surface-hover);
+      border-color: #2a2a2a;
+    }
+
+    a.card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .card h3 {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .card-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      background: var(--accent-dim);
+      padding: 4px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .card .arrow {
+      display: inline-block;
+      margin-left: 4px;
+      transition: transform 0.2s;
+      color: var(--text-muted);
+    }
+
+    a.card:hover .arrow {
+      transform: translateX(3px);
+      color: var(--accent);
+    }
+
+    /* ── Interests grid ────────────────────────────────────────── */
+    .interests-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+
+    .interest-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .interest-item:hover {
+      background: var(--surface-hover);
+      border-color: #2a2a2a;
+    }
+
+    .interest-icon {
+      font-size: 22px;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .interest-label {
+      color: var(--text-muted);
+      font-size: 12px;
+      margin-top: 4px;
+      font-weight: 400;
+    }
+
+    /* ── Socials ────────────────────────────────────────────────── */
+    .socials {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      text-decoration: none;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .social-link:hover {
+      background: var(--surface-hover);
+      border-color: #2a2a2a;
+    }
+
+    .social-link svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .social-link:hover svg {
+      fill: var(--text);
+    }
+
+    /* ── Footer ─────────────────────────────────────────────────── */
+    footer {
+      padding: 48px 0;
+      border-top: 1px solid var(--border);
+      margin-top: 32px;
+    }
+
+    footer p {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ── Fade-in animation ─────────────────────────────────────── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.6s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in:nth-child(1) { animation-delay: 0s; }
+    .fade-in:nth-child(2) { animation-delay: 0.08s; }
+    .fade-in:nth-child(3) { animation-delay: 0.16s; }
+    .fade-in:nth-child(4) { animation-delay: 0.24s; }
+    .fade-in:nth-child(5) { animation-delay: 0.32s; }
+    .fade-in:nth-child(6) { animation-delay: 0.4s; }
+
+    /* ── Mobile ─────────────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .nav-links { gap: 20px; }
+      .nav-links a { font-size: 12px; }
+      .hero { padding: 130px 0 60px; }
+      .card { padding: 22px; }
+      .interests-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="container">
+      <a href="#" class="nav-logo">DB<span>.</span></a>
+      <ul class="nav-links">
+        <li><a href="#work">Work</a></li>
+        <li><a href="#music">Music</a></li>
+        <li><a href="#adventure">Adventure</a></li>
+        <li><a href="#connect">Connect</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- Hero -->
+    <header class="hero">
+      <div class="hero-label fade-in">San Antonio, TX</div>
+      <h1 class="fade-in">David Biel</h1>
+      <p class="fade-in">Building businesses, making music, chasing trails.</p>
+      <div class="hero-line fade-in"></div>
+    </header>
+
+    <!-- Work -->
+    <section id="work">
+      <div class="section-label">Work</div>
+
+      <a href="https://bieldentalcabinets.com" target="_blank" rel="noopener" class="card fade-in">
+        <div class="card-header">
+          <h3>Biel Dental Cabinets</h3>
+          <span class="card-tag">Current</span>
+        </div>
+        <p>VP of Business Development at R.E. Biel Company. Manufacturing premium custom dental cabinetry, shipped nationwide from San Antonio. <span class="arrow">&rarr;</span></p>
+      </a>
+    </section>
+
+    <!-- Music -->
+    <section id="music">
+      <div class="section-label">Music</div>
+
+      <div class="card fade-in">
+        <div class="card-header">
+          <h3>Band Director (Retired)</h3>
+          <span class="card-tag">Education</span>
+        </div>
+        <p>Retired band director. Still active as a clinician and adjudicator in the marching arts. TMAA judge.</p>
+      </div>
+
+      <a href="https://www.youtube.com/results?search_query=beyond+the+clef" target="_blank" rel="noopener" class="card fade-in">
+        <div class="card-header">
+          <h3>Beyond the Clef</h3>
+          <span class="card-tag">YouTube</span>
+        </div>
+        <p>Former host of Beyond the Clef — conversations about music education, the marching arts, and life beyond the podium. <span class="arrow">&rarr;</span></p>
+      </a>
+    </section>
+
+    <!-- Adventure -->
+    <section id="adventure">
+      <div class="section-label">Adventure</div>
+
+      <div class="interests-grid">
+        <div class="interest-item fade-in">
+          <span class="interest-icon">&#9881;</span>
+          Offroading
+          <div class="interest-label">Trail life</div>
+        </div>
+        <div class="interest-item fade-in">
+          <span class="interest-icon">&#9968;</span>
+          MERUS Adventure Park
+          <div class="interest-label">Park Guide</div>
+        </div>
+        <div class="interest-item fade-in">
+          <span class="interest-icon">&#9878;</span>
+          Toyota Ambassador
+          <div class="interest-label">MERUS Adventure Park</div>
+        </div>
+        <div class="interest-item fade-in">
+          <span class="interest-icon">&#9733;</span>
+          Star Wars
+          <div class="interest-label">Lifelong fan</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Connect -->
+    <section id="connect">
+      <div class="section-label">Connect</div>
+
+      <div class="socials">
+        <a href="https://www.instagram.com/midnight_bison/" target="_blank" rel="noopener" class="social-link fade-in">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          Instagram
+        </a>
+        <a href="https://www.tiktok.com/@midnight_bison" target="_blank" rel="noopener" class="social-link fade-in">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.48V13a8.28 8.28 0 005.58 2.15V11.7a4.79 4.79 0 01-3.77-1.85V6.69h3.77z"/></svg>
+          TikTok
+        </a>
+        <a href="https://www.facebook.com/david.biel" target="_blank" rel="noopener" class="social-link fade-in">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          Facebook
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2026 David Biel</p>
+    </footer>
+
+  </div>
+
+</body>
+</html>
